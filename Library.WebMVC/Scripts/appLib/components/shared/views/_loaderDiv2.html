@@ -1,0 +1,233 @@
+﻿<style>
+    .loader {
+        position: absolute;
+        left: 50%;
+        margin-left: -14.5px;
+        margin-top: -14.5px;
+    }
+
+    .square {
+        background: rgb(102,110,148);
+        width: 8px;
+        height: 8px;
+        float: left;
+        top: -5px;
+        margin-right: 3px;
+        margin-top: 3px;
+        position: relative;
+        opacity: 0;
+        animation: enter 6.9s infinite;
+        -o-animation: enter 6.9s infinite;
+        -ms-animation: enter 6.9s infinite;
+        -webkit-animation: enter 6.9s infinite;
+        -moz-animation: enter 6.9s infinite;
+    }
+
+    .enter {
+        top: 0px;
+        opacity: 1;
+    }
+
+    .square:nth-child(1) {
+        animation-delay: 2.07s;
+        -o-animation-delay: 2.07s;
+        -ms-animation-delay: 2.07s;
+        -webkit-animation-delay: 2.07s;
+        -moz-animation-delay: 2.07s;
+    }
+
+    .square:nth-child(2) {
+        animation-delay: 2.42s;
+        -o-animation-delay: 2.42s;
+        -ms-animation-delay: 2.42s;
+        -webkit-animation-delay: 2.42s;
+        -moz-animation-delay: 2.42s;
+    }
+
+    .square:nth-child(3) {
+        animation-delay: 2.76s;
+        -o-animation-delay: 2.76s;
+        -ms-animation-delay: 2.76s;
+        -webkit-animation-delay: 2.76s;
+        -moz-animation-delay: 2.76s;
+        background: rgb(37,37,153);
+    }
+
+    .square:nth-child(4) {
+        animation-delay: 1.04s;
+        -o-animation-delay: 1.04s;
+        -ms-animation-delay: 1.04s;
+        -webkit-animation-delay: 1.04s;
+        -moz-animation-delay: 1.04s;
+        animation-delay: 1.04s;
+    }
+
+    .square:nth-child(5) {
+        animation-delay: 1.38s;
+        -o-animation-delay: 1.38s;
+        -ms-animation-delay: 1.38s;
+        -webkit-animation-delay: 1.38s;
+        -moz-animation-delay: 1.38s;
+        animation-delay: 1.38s;
+    }
+
+    .square:nth-child(6) {
+        animation-delay: 1.73s;
+        -o-animation-delay: 1.73s;
+        -ms-animation-delay: 1.73s;
+        -webkit-animation-delay: 1.73s;
+        -moz-animation-delay: 1.73s;
+        animation-delay: 1.73s;
+    }
+
+    .square:nth-child(8) {
+        animation-delay: 0.35s;
+        -o-animation-delay: 0.35s;
+        -ms-animation-delay: 0.35s;
+        -webkit-animation-delay: 0.35s;
+        -moz-animation-delay: 0.35s;
+        animation-delay: 0.35s;
+    }
+
+    .square:nth-child(9) {
+        animation-delay: 0.69s;
+        -o-animation-delay: 0.69s;
+        -ms-animation-delay: 0.69s;
+        -webkit-animation-delay: 0.69s;
+        -moz-animation-delay: 0.69s;
+        animation-delay: 0.69s;
+    }
+
+    .clear {
+        clear: both;
+    }
+
+    .last {
+        margin-right: 0;
+    }
+
+
+
+    @keyframes enter {
+        0% {
+            opacity: 0;
+            top: -5px;
+        }
+
+        5% {
+            opacity: 1;
+            top: 0px;
+        }
+
+        50.9% {
+            opacity: 1;
+            top: 0px;
+        }
+
+        55.9% {
+            opacity: 0;
+            top: 5px;
+        }
+    }
+
+    @-o-keyframes enter {
+        0% {
+            opacity: 0;
+            top: -5px;
+        }
+
+        5% {
+            opacity: 1;
+            top: 0px;
+        }
+
+        50.9% {
+            opacity: 1;
+            top: 0px;
+        }
+
+        55.9% {
+            opacity: 0;
+            top: 5px;
+        }
+    }
+
+    @-ms-keyframes enter {
+        0% {
+            opacity: 0;
+            top: -5px;
+        }
+
+        5% {
+            opacity: 1;
+            top: 0px;
+        }
+
+        50.9% {
+            opacity: 1;
+            top: 0px;
+        }
+
+        55.9% {
+            opacity: 0;
+            top: 5px;
+        }
+    }
+
+    @-webkit-keyframes enter {
+        0% {
+            opacity: 0;
+            top: -5px;
+        }
+
+        5% {
+            opacity: 1;
+            top: 0px;
+        }
+
+        50.9% {
+            opacity: 1;
+            top: 0px;
+        }
+
+        55.9% {
+            opacity: 0;
+            top: 5px;
+        }
+    }
+
+    @-moz-keyframes enter {
+        0% {
+            opacity: 0;
+            top: -5px;
+        }
+
+        5% {
+            opacity: 1;
+            top: 0px;
+        }
+
+        50.9% {
+            opacity: 1;
+            top: 0px;
+        }
+
+        55.9% {
+            opacity: 0;
+            top: 5px;
+        }
+    }
+
+</style>
+
+<div class="loader">
+    <div class="square"></div>
+    <div class="square"></div>
+    <div class="square last"></div>
+    <div class="square clear"></div>
+    <div class="square"></div>
+    <div class="square last"></div>
+    <div class="square clear"></div>
+    <div class="square"></div>
+    <div class="square last"></div>
+</div>

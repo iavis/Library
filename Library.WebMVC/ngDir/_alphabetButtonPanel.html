@@ -1,0 +1,14 @@
+﻿
+<div class="btn-group btn-group-xs" role="group" aria-label="...">
+
+    <button class="btn btn-{{'' == getCurrentLetter() ? 'primary' : 'default'}}  btn-xs " ng-click="setCurrentLetter('')"> * </button>
+
+    <button ng-repeat="letter in alphabet "
+            class="btn btn-{{letter.name == getCurrentLetter() ? 'primary':'default'}} btn-xs {{letter.count == 0 ? 'disabled': ''}}"
+            ng-click="setCurrentLetter(letter.name)">
+        {{letter.name}}
+    </button>
+
+</div>
+
+

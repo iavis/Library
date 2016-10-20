@@ -1,0 +1,56 @@
+﻿<table class="table">
+    <thead>
+        <tr>
+            <th>
+                #
+            </th>
+            <th>
+                Name
+            </th>
+            <th>
+                ISBN
+            </th>
+            <th>
+                Page Count
+            </th>
+            <th style="max-width:50px">
+                Year
+            </th>
+            <th>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="book in books">
+            <th scope="row">
+                {{$index+1}}
+            </th>
+            <td>
+                <span ng-show="book.showEdit">{{book.name}}</span>
+                <input ng-show="!book.showEdit" type="text" ng-model="book.name" class="form-control">
+            </td>
+            <td>
+                <span ng-show="book.showEdit">{{book.isbn}}</span>
+                <input ng-show="!book.showEdit" type="text" ng-model="book.isbn" class="form-control">
+            </td>
+            <td style="max-width:100px">
+                <span ng-show="book.showEdit">{{book.pageCount}}</span>
+                <input ng-show="!book.showEdit" type="number" ng-model="book.pageCount" class="form-control">
+            </td>
+            <td style="max-width:100px">
+                <span ng-show="book.showEdit">{{book.year}}</span>
+                <input ng-show="!book.showEdit" type="number" ng-model="book.year" class="form-control">
+            </td>
+            <td>
+                <span ng-show="book.showEdit" ng-click="toggleEdit(book)" class="glyphicon glyphicon-pencil" style="color:deeppink"></span>
+
+                <span ng-show="!book.showEdit" ng-click="toggleEdit(book)" class="glyphicon glyphicon-ok" style="color:darkolivegreen" ng-disabled="{{true}}"></span>
+
+                <span ng-click="cancelEdit(copyBook(book),book)" class="glyphicon glyphicon-repeat" style="color: darkolivegreen; cursor:pointer"></span>
+            </td>
+        </tr>
+
+    </tbody>
+</table>
+
+

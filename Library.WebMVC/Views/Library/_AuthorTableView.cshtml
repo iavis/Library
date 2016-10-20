@@ -1,0 +1,173 @@
+﻿@*
+    Список авторов
+
+     <img id="authorPhoto" src="Content/loaders/2-1.gif" class="img-thumbnail1" alt="140x140" style="max-width:100px;max-height:100px">
+
+*@
+
+<div class="col-md-10">
+    <h4>
+        Таблица авторов
+    </h4>
+
+    <div sw-data-grid-view source="authorTable">
+
+    </div>
+
+    <h4>
+        Таблица книг
+    </h4>
+
+    <div sw-data-grid-view source="bookTable">
+
+    </div>
+</div>
+
+
+<div class="col-lg-10">
+
+    <div class="col-md-5" style="border:solid 1px #ff6add;">
+        @*$scope.tabSet.letter = {{tabSet.letter}}
+            <br />
+            $scope.tabSet.maxRows = {{tabSet.maxRows}}
+            <br />
+            $scope.tabSet.sheetCount = {{tabSet.sheetCount}}
+            <br />
+            $scope.tabSet.sheetNum = {{tabSet.sheetNum}}
+            <br />
+            $scope.tabSet.selected = {{tabSet.selected.length}}*@
+    </div>
+
+    <div class="col-md-7">
+        @*authorTable.getAlphabet() = {{authorTable.getAlphabet()}}
+            <br />
+            authorTable.getLetter() = {{authorTable.getLetter()}}
+            <br />
+            authorTable.getSheetNum() = {{authorTable.getSheetNum()}}
+            <br />
+            authorTable.getSheetCount() = {{authorTable.getSheetCount()}}
+            <br />
+            authorTable.getMaxRows() = {{authorTable.getMaxRows()}}
+            <br />
+            authorTable.getData().length = {{authorTable.getData().length}}
+            <br />
+            authorTable.getSelected().length = {{authorTable.getSelected().length}}
+            <br />
+            {{trustAsHtml(tableJS.getArrayAsHtmlGrid(authorTable.getVisibleColumns()))}}
+            <br />
+            <p ng-bind-html="tableJS.getArrayAsHtmlGrid(authorTable.getVisibleColumns())"></p>*@
+    </div>
+</div>
+<div class="col-lg-10">
+    <h3>
+        выводим таблицу данных по товарам
+    </h3>
+    <p vd-show-data-grid-view source-data="authorTable"
+       visible-columns="authorTable.getVisibleColumns()">
+    </p>
+    <h3>
+        @*выводим таблицу данных по товарам
+            </h3>
+            <p vd-show-data-grid-view source-data="bookTable" >
+            </p>*@
+</div>
+
+
+<table class="table" id="author-table">
+    <caption>
+        <show-alphabet>
+        </show-alphabet>
+
+    </caption>
+    <thead>
+        <tr>
+            <th colspan="6" style="text-align:center;">
+                <show-pages>
+
+                </show-pages>
+            </th>
+        </tr>
+
+        <tr>
+            <th>
+                #
+            </th>
+            <th>
+                Photo
+            </th>
+            <th>
+                First Name
+            </th>
+            <th>
+                Middle Name
+            </th>
+            <th>
+                Last Name
+            </th>
+            <th>
+
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="author in tabSet.selected | orderBy : 'lastName' | take : tabSet.sheetNum * tabSet.maxRows : tabSet.maxRows">
+            <th scope="row" style="vertical-align: middle">
+                {{ tabSet.sheetNum * tabSet.maxRows + $index+1}}
+            </th>
+            <td style="vertical-align: middle">
+                <img id="authorPhoto" src="Content/img/res.jpg" class="img-thumbnail" alt="140x140" style="max-width:50px;max-height:50px">
+            </td>
+            <td style="vertical-align: middle">
+                <span ng-show="author.showEdit">{{author.firstName}}</span>
+                <input ng-show="!author.showEdit" type="text" ng-model="author.firstName" class="form-control">
+            </td>
+            <td style="vertical-align: middle">
+                <span ng-show="author.showEdit">{{author.middleName}}</span>
+                <input ng-show="!author.showEdit" type="text" ng-model="author.middleName" class="form-control">
+            </td>
+            <td style="vertical-align: middle">
+                <span ng-show="author.showEdit">{{author.lastName}}</span>
+                <input ng-show="!author.showEdit" type="text" ng-model="author.lastName" class="form-control" ng-change="{{author.isEdited = true}}">
+            </td>
+            <td style="vertical-align: middle">
+
+                <span ng-show="author.showEdit" ng-click="toggleEdit(author)" class="glyphicon glyphicon-pencil" title="редактировать в списке" style="color: #428bca; cursor: pointer"></span>&nbsp;
+
+                <span ng-show="author.showEdit" ng-click="toggleEdit(author)" class="glyphicon glyphicon-edit" title="редактировать в форме" style="color: #428bca; cursor: pointer"></span>&nbsp;
+
+                <span ng-show="author.showEdit" ng-click="toggleEdit(author)" class="glyphicon glyphicon-pencil" style="color:#428bca"></span>&nbsp;
+
+                <span ng-show="!author.showEdit" ng-click="toggleEdit(author)" class="glyphicon glyphicon-ok" style="color:darkolivegreen" ng-disabled="{{true}}"></span>
+
+                <span ng-click="cancelEdit(copyauthor(author),author)" class="glyphicon glyphicon-repeat" style="color: darkolivegreen; cursor:pointer"></span>
+            </td>
+        </tr>
+
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="6" style="text-align:center">
+                <nav aria-label="...">
+                    <ul class="pagination pagination-sm">
+                        <li class="disabled">
+                            <a href="#" aria-label="Previous">
+                                <span aria-hidden="true">«</span>
+                            </a>
+                        </li>
+                        <li style="color:#ffffff;background-color:#ff6a00"><a href="#">1 <span class="sr-only">(current)</span> </a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">4</a></li>
+                        <li><a href="#">5</a></li>
+                        <li><a href="#" aria-label="Next"><span aria-hidden="true">»</span></a></li>
+                    </ul>
+                </nav>
+            </td>
+        </tr>
+
+    </tfoot>
+</table>
+
+
+
+

@@ -1,0 +1,78 @@
+﻿<h4>
+    Авторы: 
+</h4>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                #
+            </th>
+            <th>
+                First Name
+            </th>
+            <th>
+                Middle Name 
+            </th>
+            <th>
+                Last Name 
+            </th>
+            <th>
+                
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="author in authors | orderBy : 'lastName'">
+            <th scope="row">
+                {{$index+1}}
+            </th>
+            <td>
+                <span ng-show="author.showEdit">{{author.firstName}}</span>
+                <input ng-show="!author.showEdit" type="text" ng-model="author.firstName" class="form-control">
+            </td>
+            <td>
+                <span ng-show="author.showEdit">{{author.id}}</span>
+                <input ng-show="!author.showEdit" type="text" ng-model="author.middleName" class="form-control">
+            </td>
+            <td>
+                <span ng-show="author.showEdit">{{author.lastName}}</span>
+                <input ng-show="!author.showEdit" type="text" ng-model="author.lastName" class="form-control" ng-change="{{author.isEdited = true}}">
+            </td>
+            <td>
+                <span ng-show="author.showEdit" ng-click="toggleEdit(author)" class="glyphicon glyphicon-pencil" style="color:deeppink"></span>
+
+                <span ng-show="!author.showEdit" ng-click="toggleEdit(author)" class="glyphicon glyphicon-ok" style="color:darkolivegreen" ng-disabled="{{true}}"></span>
+
+                <span ng-click="cancelEdit(copyauthor(author),author)" class="glyphicon glyphicon-repeat" style="color: darkolivegreen; cursor:pointer"></span>
+            </td>
+        </tr>
+
+        @*<tr>
+            <th scope="row">
+                &nbsp;
+            </th>
+            <td>
+                <input type="text" ng-model="newAuthor.firstName" class="form-control" >
+                <span ng-show="!newAuthor.isValidFisrtName" style="color:red;font-weight:bold">{{newAuthor.errorMessageForFirstName}}</span>
+            </td>
+            <td>
+                <input type="text" ng-model="newAuthor.secondName" class="form-control">
+                <span ng-show="!newAuthor.isValidSecondName" style="color:red;font-weight:bold">{{newAuthor.errorMessageForSecondName}}</span>
+            </td>
+            <td>
+                <input type="text" ng-model="newAuthor.lastName" class="form-control" ng-change="{{author.isEdited = true}}" >
+                <span ng-show="!newAuthor.isValidLastName" style="color:red;font-weight:bold">{{newAuthor.errorMessageForLastName}}</span>
+            </td>
+            <td>
+                <button class="btn btn-warning" ng-click="addAuthor()"> Добавить</button>
+            </td>
+
+        </tr>*@
+
+
+    </tbody>
+</table>
+
+
+

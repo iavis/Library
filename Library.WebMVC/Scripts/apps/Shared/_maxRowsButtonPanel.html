@@ -1,0 +1,25 @@
+﻿<!--
+
+    Кнопки для установки максимального количества строк на листе таблицы
+
+-->
+
+<!--Если есть хоть одна страница, то отображаем панель-->
+<div  class="btn-group btn-group-xs animated fadeIn" role="group" aria-label="..." title="Максимальное количество строк на странице ">
+
+    <button class="btn btn-{{maxRows == 5 ? 'primary':'default'}} btn-xs"
+            ng-click="setMaxRows(5)">
+        {{5}}
+    </button>
+
+    <button class="btn btn-{{maxRows == 10 ? 'primary':'default'}} btn-xs"
+            ng-click="setMaxRows(10)">
+        {{10}}
+    </button>
+
+    <button class="btn btn-{{maxRows == 20 ? 'primary':'default'}} btn-xs"
+            ng-click="setMaxRows(20)">
+        {{20}}
+    </button>
+
+</div>

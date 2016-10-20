@@ -1,0 +1,26 @@
+﻿
+<div ng-app="appLibrary" ng-controller="BooksCtrl" class="row">
+
+    <div class="col-md-10">
+
+        @*@Html.Partial("_ShowBookTable")*@
+
+        @Html.Partial("_ShowAuthorTable")
+
+        @Html.Partial("_AuthorDetail")
+
+
+    </div>
+
+
+    <select ng-model="items.language" ng-focus="" class="form-control" id="lang_lang_field">
+        <option ng-repeat="langName in Persone.languages" value="{{author.id}}">{{author.fullName}}</option>
+    </select>
+
+
+    @*<span ng-show="book.showEdit" ng-click="toggleEdit(book)" class="glyphicon glyphicon-pencil" style="color:deeppink"></span>
+        <span ng-show="!book.showEdit" ng-click="toggleEdit(book)" class="glyphicon glyphicon-ok" style="color:darkolivegreen"></span>
+        <span ng-click="toggleEdit(book)" class="glyphicon glyphicon-repeat" style="color:darkolivegreen"></span>*@
+
+</div>
+

@@ -1,0 +1,12 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<div ng-app="myApp">
+    <div ng-controller="HomeCtrl">
+        <input name="myFile" upload-file="myFile" type="file" />
+        <input type="button" ng-click="doUpload()" text="Upload" />
+    </div>
+</div>

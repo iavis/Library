@@ -1,0 +1,296 @@
+﻿<!--Модальная форма для подтверждения удаления элемента-->
+<ng-include src="deleteItemConfirmFormUrl"></ng-include>
+
+<!--Пока данные не загружены  - показываем процесс загрузки-->
+<div ng-if="isLoading" style="display: table; height:300px; width: 100%;">
+
+    <div style="text-align:center; vertical-align: middle; display: table-cell; height: 90%; width: 90%; ">
+
+        <ng-include src="loaderDivUrl"></ng-include>
+
+    </div>
+</div>
+
+<!--
+    таблица элементов массива данных
+-->
+<pre>
+
+</pre>
+
+<table ng-if="!isLoading" class="table table-hover" style="font-size:90%;">
+
+    <!--Загловок таблицы-->
+    <caption>
+
+        <!--Панель кнопок перехода по буквам алфавита-->
+
+        <sw-aplhabet-button-panel>
+
+            <!--<b>  Выводим панель кнопок перехода по буквам </b>-->
+
+        </sw-aplhabet-button-panel>
+
+    </caption>
+
+
+    <!--Шапка таблицы-->
+    <thead>
+
+        <!-- Строка таблицы для "Панель кнопок перехода по листам данных таблицы" -->
+        <tr>
+
+            <th style="text-align:left;" colspan="2">
+
+                <!--Кнопка обновления данных в таблице-->
+                <button type="button" class="btn btn-primary btn-xs" ng-click="reloadData()()" title="Обновить таблицу данных">
+                    <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                </button>
+
+            </th>
+
+            <th style="text-align:center" colspan="{{visibleColumns.length}}">
+
+                <!--Панель кнопок перехода по листам данных таблицы-->
+                <sw-sheet-num-button-panel sheet-count="sheetCount"
+                                           sheet-num="sheetNum"
+                                           set-sheet-num="setSheetNum">
+
+                    <b>Выводим панель кнопок перехода по номер страниц</b>
+
+                </sw-sheet-num-button-panel>
+
+            </th>
+
+            <th style="text-align:center;width:120px">
+
+                <!--Панель кнопок для установки максимального количества строк на листе -->
+                <ng-include src="maxRowsButtonPanelUrl"> </ng-include>
+
+            </th>
+
+        </tr>
+
+        <!-- Строка таблицы для заголовков столбцов -->
+        <tr class="animated fadeIn">
+
+            <!-- Стоблец *Порядковый номер* -->
+            <th style="width:25px">#</th>
+            <th style="width:25px"></th>
+
+            <!--Выводим все стоблцы таблицы данных с isVisible == true-->
+            <th ng-repeat="column in visibleColumns | filter : { isVisible : true }" ng-style="column.style">
+                <span ng-if="column.isOrderable"
+                      class="glyphicon glyphicon-sort-by-attributes "
+                      title="сортировать по возврастанию"
+                      ng-class="{'active-order-direction' : orderDirection == '+' && orderColumn == column.name,'inactive-order-direction' : orderDirection != '+' || orderColumn != column.name  }"
+                      ng-click="setSortColumn(column)"></span>
+                {{column.vname }}
+                <span ng-if="column.isOrderable"
+                      class="glyphicon glyphicon-sort-by-attributes-alt"
+                      title="сортировать по убыванию"
+                      style="margin-right: 1px; cursor: pointer"
+                      ng-class="{'active-order-direction' : orderDirection == '-' && orderColumn == column.name, 'inactive-order-direction' : orderDirection != '-' || orderColumn != column.name }"
+                      ng-click="setSortColumn(column,true)"></span>
+            </th>
+
+            <!--Столбец для действий с таблицей-->
+            <th ng-style="{width : '100px'}"> /// </th>
+
+        </tr>
+    </thead>
+
+    <!--Тело таблицы-->
+    <tbody>
+
+        <!--Если режим просотра элемента - то просто покаже строку таблицы с данными элемента-->
+        <tr ng-if="!item.isEdit" class="animated fadeIn" ng-repeat-start="item in items| orderBy : sortColumn |take : skipNum : maxRows" ng-class="{'warning' : item.isEdit}">
+
+            <!--Номер строки таблицы-->
+            <td scope="row">
+                {{(skipNum) + ($index + 1)}}
+            </td>
+            <td>
+                <input type="checkbox" ng-model="item.isMarked">
+            </td>
+
+            <!--Значение поля элемента-->
+            <td ng-repeat="column in visibleColumns ">
+
+                <!--Если поле является картинкой - то покажем её-->
+                <img ng-if="column.isPhoto" ng-src="{{getPhotoRef(item[column.name])}}" class="img-thumbnail" alt="140x140" style="max-width:50px;max-height:50px">
+
+                <!--Если поле имеет тип строка,число или дата-->
+                <span ng-if="!column.isPhoto&&!column.isObject"> {{item[column.name]}} </span>
+
+                <!--Если поле имеет тип ОБЪЕКТ -->
+                <span ng-if="!column.isPhoto&&column.isObject"> {{item[column.name].name}} </span>
+
+            </td>
+
+            <!--Достпуные действия над элементом-->
+            <td>
+                <!-- Операция редактирования элемента в списке-->
+                <span ng-if="isEditInListEnabled" ng-click="toggleEdit(item)"
+                      class="glyphicon glyphicon-pencil" title="редактировать в списке" style="color: #428bca; margin-right:3px; cursor: pointer"></span>
+
+                <span ng-if="item.isEdit" ng-click="toggleEdit(item)"
+                      class="glyphicon glyphicon-ok" title="Сохранить изменения" style="color: #428bca; margin-right:3px; cursor: pointer"></span>
+
+                <!-- Операция редактирования элемента в форме-->
+                <span ng-if="isEditInFormEnabled" ng-click="toggleEdit(author)"
+                      class="glyphicon glyphicon-edit" title="редактировать в форме" style="color: #428bca; margin-right: 3px; cursor: pointer"></span>
+
+                <!-- Операция удаления элемента-->
+                <span ng-if="isDeleteItemEnabled" ng-click="setCurrentItem(item)"
+                      class="glyphicon glyphicon-remove" title="удалить элемент" style="color: #428bca; margin-right: 3px; cursor: pointer"
+                      data-toggle="modal" data-target="#exampleModal"></span>
+
+                <!-- Операция создания нового эелемнта путем копирования -->
+                <span ng-if="isCopyItemEnabed" ng-click="toggleEdit(author)"
+                      class="glyphicon glyphicon-glyphicon glyphicon-plus" style="color: #428bca; margin-right: 3px; cursor: pointer"></span>
+
+            </td>
+        </tr>
+
+
+        <!--Если элемент редактируется - тогда показываем форму-строку редактирования-->
+        <tr ng-if="item.isEdit" class="animated fadeIn" ng-repeat-end ng-class="{'warning' : item.isMarked}" ng-form name="editItemNgForm">
+            <!--Номер строки таблицы-->
+            <td scope="row">
+                {{(skipNum) + ($index + 1)}}
+            </td>
+
+            <td>
+                <input type="checkbox" ng-model="item.isMarked">
+            </td>
+
+            <td ng-repeat="column in visibleColumns " ng-style="column.style">
+
+                <!--Если поле является картинкой - то покажем её-->
+                <img ng-if="column.isPhoto" ng-src="{{getPhotoRef(item.$edit[column.name])}}" class="img-thumbnail" alt="140x140" style="max-width:50px;max-height:50px">
+
+                <!--Если поле имеет тип строка,число или дата-->
+                <span ng-if="!column.isPhoto&&!column.isEditable"> {{item[column.name]}} </span>
+
+                <!--Если поле имеет тип строка,число или дата-->
+                <div ng-if="column.isEditable&&!column.isPhoto" ng-class="{'has-error' : editItemNgForm[column.name].$invalid && editItemNgForm[column.name].$dirty}">
+
+                    <!-- Значения свойства не является объектом и не может выбираться из списка (isObject==false && isList == false)-->
+                    <input ng-if="!column.isList"
+                           ng-model="item.$edit[column.name]"
+                           ng-class="'form-control input-sm'"
+                           name="{{column.name}}"
+                           placeholder="{{column.placeholder}}"
+                           ng-required="column.isRequired"
+                           ng-minlength="column.minLength"
+                           ng-maxlength="column.maxLength"
+                           ng-pattern="column.pattern">
+
+                    <!-- Поле является объектом  -->
+                    <select ng-if="column.isList && column.isObject" 
+                            ng-model="item.$edit[column.name]"
+                            ng-options="unit as unit.name for unit in additions[column.bindName] track by unit.id"
+                            ng-class="'form-control input-sm'"></select>
+
+                    <span ng-show="editItemNgForm[column.name].$error.required" class="help-block">{{column.requiredErrorText}}</span>
+                    <span ng-show="editItemNgForm[column.name].$error.pattern" class="help-block">{{column.patternErrorText}}</span>
+                    <span ng-show="editItemNgForm[column.name].$error.minlength" class="help-block">{{column.minLengthErrorText}}</span>
+                    <span ng-show="editItemNgForm[column.name].$error.maxlength" class="help-block">{{column.maxLengthErrorText}}</span>
+
+                </div>
+            </td>
+
+            <!--Достпуные действия над элементом-->
+            <td>
+
+                <div class="btn-group btn-group-xs animated fadeIn" role="group">
+
+                    <!--Операция сохранения изменненых данных-->
+                    <button ng-if="item.isEdit" class="btn btn-link btn-xs" ng-click="toggleEdit(item, editItemNgForm)" ng-disabled="!editItemNgForm.$valid">
+                        <span class="glyphicon glyphicon-ok" title="Сохранить изменения" style="color: #f0ad4e; cursor: pointer;font-weight:700"></span>
+                    </button>
+
+                    <!--Операция отмены изменнения данных-->
+                    <button ng-if="item.isEdit" class="btn btn-link btn-xs" ng-click="cancelEdit(item, editItemNgForm)">
+                        <span class="glyphicon glyphicon-off" title="Не сохранять изменения" style="color: #d9534f; cursor: pointer; font-weight: 700"></span>
+                    </button>
+                </div>
+
+            </td>
+
+        </tr>
+
+
+        <tr ng-form name="newItemNgForm">
+
+            <th>
+                #
+            </th>
+            <th>
+
+            </th>
+
+            <td ng-repeat="column in visibleColumns " ng-style="column.style">
+
+                <!--Если поле является картинкой - то покажем её -->
+                <img ng-if="column.isPhoto" src="/Content/img/nopic.jpg" class="img-thumbnail" alt="140x140" style="max-width:50px;max-height:50px">
+
+                <!--Если поле имеет тип строка, число или дата -->
+                <div ng-if="column.isEditable&&!column.isPhoto" ng-class="{'has-error' : newItemNgForm[column.name].$invalid && newItemNgForm[column.name].$dirty}">
+
+                    <input ng-if="!column.isList" class="form-control input-sm" name="{{column.name}}" placeholder="{{column.placeholder}}"
+                           ng-model="newItem[column.name]"
+                           ng-required="column.isRequired"
+                           ng-minlength="column.minLength"
+                           ng-maxlength="column.maxLength"
+                           ng-pattern="column.pattern">
+
+                    <!-- Поле является объектом  -->
+                    <select ng-if="column.isList && column.isObject"
+                            ng-model="newItem[column.name]"
+                            ng-options="unit as unit.name for unit in additions[column.bindName] track by unit.id"
+                            ng-class="'form-control input-sm'"></select>
+
+                    <span ng-show="newItemNgForm[column.name].$error.required" class="help-block">{{column.requiredErrorText}}</span>
+                    <span ng-show="newItemNgForm[column.name].$error.pattern" class="help-block">{{column.patternErrorText}}</span>
+                    <span ng-show="newItemNgForm[column.name].$error.minlength" class="help-block">{{column.minLengthErrorText}}</span>
+                    <span ng-show="newItemNgForm[column.name].$error.maxlength" class="help-block">{{column.maxLengthErrorText}}</span>
+                </div>
+
+
+
+            </td>
+
+            <td>
+                <button type="button" class="btn btn-warning btn-sm" ng-click="onAddItem(newItem,newItemNgForm)" title="Добавить новый элемент" ng-disabled="!newItemNgForm.$valid">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add
+                </button>
+            </td>
+        </tr>
+
+    </tbody>
+
+    <!--Нижняя часть таблицы-->
+    <tfoot>
+        <!-- Строка таблицы для "Панель кнопок перехода по листам данных таблицы" -->
+        <tr class="animated fadeIn">
+            <th style="text-align:center" colspan="{{visibleColumns.length + 2}}">
+
+                <!--Панель кнопок перехода по листам данных таблицы-->
+                <sw-sheet-num-button-panel sheet-count="sheetCount"
+                                           sheet-num="sheetNum"
+                                           set-sheet-num="setSheetNum">
+
+                    <b>Выводим панель кнопок перехода по номер страниц</b>
+
+                </sw-sheet-num-button-panel>
+
+            </th>
+
+        </tr>
+
+    </tfoot>
+
+</table>
+

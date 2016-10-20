@@ -1,0 +1,82 @@
+﻿@model Library.DOMAIN.Models.Book
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+@*@{
+    var defaultHtmlAttributesObject = new { @class = "form-control" };
+    var htmlAttributesObject = ViewData["htmlAttributes"] ?? new { };
+    var htmlAttributes = Html.MergeHtmlAttributes(htmlAttributesObject, defaultHtmlAttributesObject);
+}*@
+
+<h2>Edit</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Book</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" }, })
+                @Html.ValidationMessageFor(model => model.Name)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PageCount, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorForFormControlBS(model => model.PageCount)
+                @Html.ValidationMessageFor(model => model.PageCount)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Year, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorForFormControlBS(model => model.Year)
+                @Html.ValidationMessageFor(model => model.Year)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Isbn10, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorForFormControlBS(model => model.Isbn10)
+                @Html.ValidationMessageFor(model => model.Isbn10)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Isbn13, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorForFormControlBS(model => model.Isbn13)
+                @Html.ValidationMessageFor(model => model.Isbn13)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default btn-warning " />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLinkSaveBS("Back to List", "Index")
+</div>
+
+@Model.ToString()
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

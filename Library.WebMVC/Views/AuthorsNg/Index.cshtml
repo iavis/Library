@@ -1,0 +1,16 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+<section ng-app="appLibrary" ng-controller="MainController">
+
+    <ng-include src="AuthorsUrl"> </ng-include>
+
+</section>
+
+
+
+@section Scripts {
+
+    @Html.Partial("_AddAngularComponents");
+
+}

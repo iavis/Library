@@ -1,0 +1,24 @@
+﻿
+<div class="btn-group btn-group-xs" role="group" aria-label="...">
+
+    <button 
+            class="btn btn-default btn-xs {{tabSet.isFirstSheetNum()  ? 'disabled': ''}}"  
+            ng-click="tabSet.incSheetNum(-1)">
+        <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+    </button>
+
+    <button 
+            ng-repeat="num in [].constructor(tabSet.sheetCount) track by $index " 
+            class="btn btn-{{$index == tabSet.sheetNum ? 'primary':'default'}} btn-xs" 
+            ng-click="tabSet.setSheetNum($index)"> 
+        {{$index+1}}
+    </button>
+
+    <button 
+            class="btn btn-default btn-xs {{tabSet.isLastSheetNum()  ? 'disabled': ''}}" 
+            ng-click="tabSet.incSheetNum()">
+        <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+    </button>
+
+</div>
+

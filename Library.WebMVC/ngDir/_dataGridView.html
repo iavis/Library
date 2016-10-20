@@ -1,0 +1,65 @@
+﻿
+<table class="table" style="border:solid 3px #777fb0;" id="source.id">
+
+    <caption>
+        <vd-show-alphabet-button-panel source-data="source"
+                                       source-aplhabet="source.getAlphabet()"
+                                       set-current-letter="source.setLetter"
+                                       get-current-letter="source.getLetter">
+        </vd-show-alphabet-button-panel>
+    </caption>
+
+    <thead>
+        <tr ng-if="source.getFlagTopNumBottonPanel()">
+            <th colspan="{{visibleColumns.length + 2}}" style="text-align:center">
+                <vd-show-num-button-panel source-data="source"
+                                          is-first-sheet-num="source.isFirstSheetNum"
+                                          is-last-sheet-num="source.isLastSheetNum"
+                                          inc-sheet-num="source.incSheetNum"
+                                          get-sheet-count="source.getSheetCount"
+                                          set-sheet-num="source.setSheetNum"
+                                          get-sheet-num="source.getSheetNum">
+                </vd-show-num-button-panel>
+            </th>
+        </tr>
+        <tr>
+            <th>
+                #
+            </th>
+            <th ng-repeat="column in visibleColumns">
+                {{column.vname}}
+            </th>
+            <th>
+
+            </th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        <tr ng-repeat="row in source.getSelected() | orderBy : source.getOrderColumn() | take : source.getSheetNum() * source.getMaxRows() : source.getMaxRows() "
+            vd-show-data-grid-row
+            row-source="row"
+            row-num="$index+1"
+            row-columns="visibleColumns"></tr>
+
+    </tbody>
+
+    <tfoot>
+        <tr ng-if="source.getFlagBottomNumBottonPanel()">
+            <th colspan="{{visibleColumns.length + 2}}" style="text-align: center; border: dotted 0px #777fb0;">
+                <vd-show-num-button-panel source-data="source"
+                                          is-first-sheet-num="source.isFirstSheetNum"
+                                          is-last-sheet-num="source.isLastSheetNum"
+                                          inc-sheet-num="source.incSheetNum"
+                                          get-sheet-count="source.getSheetCount"
+                                          set-sheet-num="source.setSheetNum"
+                                          get-sheet-num="source.getSheetNum">
+                </vd-show-num-button-panel>
+            </th>
+        </tr>
+    </tfoot>
+
+</table>
+
+

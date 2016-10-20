@@ -1,0 +1,163 @@
+﻿<!--Модальная форма для подтверждения удаления элемента-->
+<ng-include src="deleteItemConfirmFormUrl"></ng-include>
+
+
+ <!--Пока данные не загружены  - показываем процесс загрузки--> 
+<div ng-if="isLoading" style="display: table; height:300px; width: 100%;">
+
+    <div style="text-align:center; vertical-align: middle; display: table-cell; height: 90%; width: 90%; "> 
+
+        <ng-include src="loaderDivUrl"></ng-include>
+
+    </div>
+</div>
+
+<!--
+    таблица элементов массива данных
+-->
+<table ng-if="!isLoading" class="table table-hover" style="font-size:90%">
+
+    <!--Загловок таблицы-->
+    <caption>
+
+        <!--Панель кнопок перехода по буквам алфавита-->
+
+        <sw-aplhabet-button-panel>
+
+            <!--<b>  Выводим панель кнопок перехода по буквам </b>-->
+
+        </sw-aplhabet-button-panel>
+
+    </caption>
+
+
+    <!--Шапка таблицы-->
+    <thead>
+
+        <!-- Строка таблицы для "Панель кнопок перехода по листам данных таблицы" -->
+        <tr>
+
+            <th style="text-align:center">
+
+                <!--Кнопка обновления данных в таблице--> 
+                <button type="button" class="btn btn-primary btn-xs" ng-click="reloadData()()" title="Обновить таблицу данных">
+                    <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> 
+                </button>
+
+            </th>
+
+            <th style="text-align:center" colspan="{{visibleColumns.length}}">
+
+                <!--Панель кнопок перехода по листам данных таблицы-->
+                <sw-sheet-num-button-panel sheet-count="sheetCount"
+                                           sheet-num="sheetNum"
+                                           set-sheet-num="setSheetNum">
+
+                    <b>Выводим панель кнопок перехода по номер страниц</b>
+
+                </sw-sheet-num-button-panel>
+
+            </th>
+
+            <th style="text-align:center" >
+
+                <!--Панель кнопок для установки максимального количества строк на листе -->
+                <ng-include src="maxRowsButtonPanelUrl"> </ng-include>
+            </th>
+
+        </tr>
+
+        <!-- Строка таблицы для заголовков столбцов -->
+        <tr class="animated fadeIn">
+
+            <!-- Стоблец *Порядковый номер* -->
+            <th>#</th>
+
+            <!--Выводим все стоблцы таблицы данных с isVisible == true-->
+            <th ng-repeat="column in visibleColumns | filter : { isVisible : true }">
+                <span ng-if="column.isOrderBy"  ng-click="setSortColumn(column)"
+                      class="glyphicon glyphicon-sort-by-attributes" title="сортировать по возврастани" style="color: #194974; margin-right: 1px; cursor: pointer"></span>
+                {{column.vname }}
+                <span ng-if="column.isOrderBy" ng-click="setSortColumn(column,true)"
+                      class="glyphicon glyphicon-sort-by-attributes-alt" title="сортировать по убыванию" style="color: #2e5b83; margin-right: 1px; cursor: pointer"></span>
+            </th>
+
+            <!--Столбец для действий с таблицей-->
+            <th> /// </th>
+
+        </tr>
+    </thead>
+
+
+    <!--Тело таблицы-->
+    <tbody>
+
+        <tr class="animated fadeIn" ng-repeat="item in data| orderBy : sortColumn |take : skipNum : maxRows">
+
+            <!--Номер строки таблицы-->
+            <td scope="row">
+                {{(skipNum) + ($index + 1)}}
+            </td>
+
+
+            <!--Значение поля элемента-->
+            <td ng-repeat="column in visibleColumns ">
+
+                <!--Если поле является картинкой - то покажем её-->
+                <img ng-if="column.isPhoto" ng-src="{{getPhotoRef(item[column.name])}}" class="img-thumbnail" alt="140x140" style="max-width:50px;max-height:50px">
+
+                <!--Если поле имеет тип строка,число или дата-->
+                <span ng-if="!column.isPhoto"> {{item[column.name]}} </span>
+
+            </td>
+
+            <!--Достпуные действия над элементом-->
+            <td>
+
+                <!-- Операция редактирования элемента в списке-->
+                <span ng-if="isEditInListEnabled" ng-click="toggleEdit(author)"
+                      class="glyphicon glyphicon-pencil" title="редактировать в списке" style="color: #428bca; margin-right:3px; cursor: pointer"></span>
+
+                <!-- Операция редактирования элемента в форме-->
+                <span ng-if="isEditInFormEnabled" ng-click="toggleEdit(author)"
+                      class="glyphicon glyphicon-edit" title="редактировать в форме" style="color: #428bca; margin-right: 3px; cursor: pointer"></span>
+
+                <!-- Операция удаления элемента-->
+                <span ng-if="isDeleteItemEnabled" ng-click="setCurrentItem(item)"
+                      class="glyphicon glyphicon-remove" title="удалить элемент" style="color: #428bca; margin-right: 3px; cursor: pointer"
+                      data-toggle="modal" data-target="#exampleModal"></span>
+
+                <!-- Операция создания нового эелемнта путем копирования -->
+                <span ng-if="isCopyItemEnabed" ng-click="toggleEdit(author)"
+                      class="glyphicon glyphicon-glyphicon glyphicon-plus" style="color: #428bca; margin-right: 3px; cursor: pointer"></span>
+
+            </td>
+        </tr>
+
+
+    </tbody>
+
+
+    <!--Нижняя часть таблицы-->
+    <tfoot>
+        <!-- Строка таблицы для "Панель кнопок перехода по листам данных таблицы" -->
+        <tr class="animated fadeIn">
+            <th style="text-align:center" colspan="{{visibleColumns.length + 2}}">
+
+                <!--Панель кнопок перехода по листам данных таблицы-->
+                <sw-sheet-num-button-panel sheet-count="sheetCount"
+                                           sheet-num="sheetNum"
+                                           set-sheet-num="setSheetNum">
+
+                    <b>Выводим панель кнопок перехода по номер страниц</b>
+
+                </sw-sheet-num-button-panel>
+
+            </th>
+
+        </tr>
+
+    </tfoot>
+
+</table>
+

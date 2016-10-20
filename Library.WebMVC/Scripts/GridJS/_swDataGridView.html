@@ -1,0 +1,91 @@
+﻿
+<ng-include src="deleteConfirmForm"></ng-include>
+
+
+Текущий элемент {{currentItem}}
+<table class="table table-striped" style="font-size:90%">
+    <caption>
+        <sw-aplhabet-button-panel alphabet="source.getAlphabet()"
+                                  current-letter="source.getLetter()"
+                                  set-current-letter="source.setLetter">
+            Выводим панель кнопок перехода по буквам
+        </sw-aplhabet-button-panel>
+    </caption>
+
+    <thead >
+        <tr >
+            <th style="text-align:center" colspan="{{columns.length + 2}}">
+                <sw-sheet-num-button-panel sheet-count="source.getSheetCount()"
+                                           sheet-num="source.getSheetNum()"
+                                           set-sheet-num="source.setSheetNum">
+                    Выводим панель кнопок перехода по номер страниц
+                </sw-sheet-num-button-panel>
+            </th>
+        </tr>
+        <tr class="animated fadeIn">
+            <!--Выводим заголовки столбцов-->
+            <th>#</th>
+            <th ng-repeat="column in columns">
+                {{column.vname}}
+            </th>
+            <th>ACTION</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!--//tabSet.sheetNum * tabSet.maxRows : tabSet.maxRows-->
+        {{initLocal()}}
+        <tr class="animated fadeIn" ng-repeat="item in source.getSelected()| orderBy : '-lastName' |take : skipNum : maxRows">
+            <td scope="row">
+                {{(skipNum) + ($index + 1)}}
+            </td>
+
+            <td ng-repeat="column in columns">
+                <!--<sw-cell-grid-view source-item="item[column.name]">-->
+                {{item[column.name]}}
+                <img ng-if="column.isPhoto" src="{{getPhotoRef(item[column.name])}}" class="img-thumbnail" alt="140x140" style="max-width:50px;max-height:50px">
+
+            </td>
+
+            <td>
+
+<!--                Операция редактирования элемента в списке-->
+                <span ng-if="isEditInListEnabled()" ng-click="toggleEdit(author)"
+                      class="glyphicon glyphicon-pencil" title="редактировать в списке" style="color: #428bca; margin-right:3px; cursor: pointer"></span>
+
+<!--                Операция редактирования элемента в форме-->
+                <span ng-if="isEditInFormEnabled()" ng-click="toggleEdit(author)"
+                      class="glyphicon glyphicon-edit" title="редактировать в форме" style="color: #428bca; margin-right: 3px; cursor: pointer"></span>
+                
+<!--                Операция удаления элемента-->
+                <span ng-if="isDeleteItemEnabled()" ng-click="setCurrentItem(item)"
+                      class="glyphicon glyphicon-remove" title="удалить элемент" style="color: #428bca; margin-right: 3px; cursor: pointer"
+                      data-toggle="modal" data-target="#exampleModal"></span>
+              
+<!--                Операция создания нового эелемнта путем копирования -->
+                <span ng-if="isCopyItemEnabed()" ng-click="toggleEdit(author)"
+                      class="glyphicon glyphicon-glyphicon glyphicon-plus" style="color: #428bca; margin-right: 3px; cursor: pointer"></span>
+
+            </td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <th style="text-align:center" colspan="{{columns.length + 2}}">
+                <sw-sheet-num-button-panel sheet-count="source.getSheetCount()"
+                                           sheet-num="source.getSheetNum()"
+                                           set-sheet-num="source.setSheetNum">
+                    Выводим панель кнопок перехода по номер страниц
+                </sw-sheet-num-button-panel>
+            </th>
+        </tr>
+    </tfoot>
+</table>
+<br/>
+
+{{(source.getColumns() | filter : {isOrderBy : true})}}
+<br/>
+{{scope.source.getColumns()}}
+<br/>
+{{$filter('filter')([], {isOrderBy: true })}}
+
+<button type="button" class="btn btn-link" data-toggle="modal" data-target="#exampleModal">Добавить книгу </button>

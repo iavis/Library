@@ -1,0 +1,14 @@
+﻿
+<div class="btn-group btn-group-xs" role="group" aria-label="..." >
+
+    <a href="#" class="btn btn-{{'' == tabSet.letter ? 'primary' : 'default'}}  btn-xs " ng-click="tabSet.setLetter('')"> * </a>
+
+    <button 
+        ng-repeat="letter in tabSet.alphabet " 
+        class="btn btn-{{letter.name == tabSet.letter ? 'primary':'default'}} btn-xs {{letter.count == 0 ? 'disabled': ''}}"     
+        ng-click="tabSet.setLetter(letter.name)"> 
+        {{letter.name}}
+    </button>
+
+</div>
+

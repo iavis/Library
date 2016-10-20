@@ -1,0 +1,9 @@
+﻿<div class="btn-group btn-group-xs" role="group" aria-label="...">
+
+    <button ng-repeat="letter in alphabet "
+            class="btn btn-{{isCurrentLetter(letter.name) ? 'primary':'default'}} btn-xs {{isZeroCount(letter.count) ? 'disabled': ''}}"
+            ng-click="onChangeLetter(letter.name)">
+        {{letter.name}}
+    </button>
+
+</div>

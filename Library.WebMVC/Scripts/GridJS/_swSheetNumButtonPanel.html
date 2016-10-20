@@ -1,0 +1,22 @@
+﻿<!--<b>SHEET NUM BUTTON PANEL </b>-->
+<div ng-if="(sheetCount > 1)" class="btn-group btn-group-xs animated fadeIn" role="group" aria-label="...">
+
+    <button class="btn btn-default btn-xs {{isFirstSheetNum() ? 'disabled': ''}}"
+            ng-click="incSheetNum(-1)">
+        &laquo;
+        <!--<span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>-->
+    </button>
+
+    <button ng-repeat="num in [].constructor(sheetCount) track by $index "
+            class="btn btn-{{sheetNum == $index ? 'primary':'default'}} btn-xs"
+            ng-click="onChangeSheetNum($index)">
+        {{$index+1}}
+    </button>
+
+    <button class="btn btn-default btn-xs {{isLastSheetNum() ? 'disabled': ''}}"
+            ng-click="incSheetNum(1)">
+        <b>&raquo;</b>
+        <!--<span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>-->
+    </button>
+
+</div>

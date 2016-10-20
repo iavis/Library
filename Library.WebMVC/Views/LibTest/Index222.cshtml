@@ -1,0 +1,21 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<div ng-app="appLibrary" ng-controller="AuthorCtrl" class="row">
+
+    <div class="col-md-12">
+
+        <sw-data-grid-view source="authors" max-rows="10" remove-item="removeItem" reload-data="loadData">
+
+        </sw-data-grid-view>
+
+    </div>
+
+</div>
+
+@section Scripts {
+
+    <script src="Scripts/apps/libraryApp.js"></script>
+
+}

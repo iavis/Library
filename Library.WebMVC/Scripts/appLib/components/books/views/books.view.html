@@ -1,0 +1,24 @@
+﻿<p >
+    Unit
+    <span class="label label-success">
+        Книги&nbsp;&nbsp;&nbsp;
+    </span>
+</p>
+
+<div id="booksMain" ng-controller="BooksController">
+    <div class="row">
+        <div class="col-md-12">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <sw-data-grid-view source="booksData"
+                               max-rows="10"
+                               add-item="addItem"
+                               remove-item="removeItem"
+                               update-item="updateItem"
+                               reload-data="reloadData">
+            </sw-data-grid-view>
+        </div>
+    </div>
+</div>

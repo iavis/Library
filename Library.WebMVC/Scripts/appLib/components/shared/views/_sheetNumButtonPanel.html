@@ -1,0 +1,26 @@
+﻿
+<!--Панель кнопок перехода по старницам данных таблицы--> 
+
+<!--Если есть хоть одна страница, то отображаем панель-->
+<div ng-if="(sheetCount > 1)" class="btn-group btn-group-xs animated fadeIn" role="group" aria-label="...">
+
+    <!--Кнопка перехода на одну страницу назад--> 
+    <button class="btn btn-default btn-xs " ng-class="{'disabled' : isFirstSheetNum()}"
+            ng-click="incSheetNum(-1)">
+        &laquo;
+    </button>
+
+    <!--Кнопки перехода по номерам страниц-->
+    <button ng-repeat="num in [].constructor(sheetCount) track by $index "
+            class="btn btn-{{sheetNum == $index ? 'primary':'default'}} btn-xs"
+            ng-click="onChangeSheetNum($index)">
+        {{$index+1}}
+    </button>
+
+    <!--Кнопка перехода на одну страницу вперед-->
+    <button class="btn btn-default btn-xs " ng-class="{'disabled' : isLastSheetNum()}"
+            ng-click="incSheetNum(1)">
+        <b>&raquo;</b>
+    </button>
+
+</div>

@@ -1,0 +1,45 @@
+﻿@{
+    ViewBag.Title = "Index1";
+}
+
+<section ng-app="appLibrary" ng-controller="MainController">
+
+    <ng-include src="AuthorsUrl"> </ng-include>
+
+    <ng-include src="BooksUrl"> </ng-include>
+
+</section>
+
+@section Scripts {
+
+    @*Подключаем блок SHARED*@
+    <script src="~/Scripts/appLib/components/shared/shared.init.js"></script>
+    <script src="~/Scripts/appLib/components/shared/shared.const.js"></script>
+    <script src="~/Scripts/appLib/components/shared/shared.value.js"></script>
+    <script src="~/Scripts/appLib/components/shared/shared.filter.js"></script>
+    @*Общие директивы*@
+    <script src="~/Scripts/appLib/components/shared/input-view.directive.js"></script>
+    <script src="~/Scripts/appLib/components/shared/sheet-num-button-panel.directive.js"></script>
+    <script src="~/Scripts/appLib/components/shared/data-grid-view.directive.js"></script>
+    @*Общие сервисы*@
+    <script src="~/Scripts/appLib/components/shared/begin-word.factory.js"></script>
+    <script src="~/Scripts/appLib/components/shared/column-table.factory.js"></script>
+    <script src="~/Scripts/appLib/components/shared/data-table.factory.js"></script>
+    @*Подключаем блок AUHTORS*@
+    <script src="~/Scripts/appLib/components/authors/authors.init.js"></script>
+    <script src="~/Scripts/appLib/components/authors/auhtor-object.factory.js"></script>
+    <script src="~/Scripts/appLib/components/authors/authors.service.js"></script>
+    <script src="~/Scripts/appLib/components/authors/authors.directive.js"></script>
+    <script src="~/Scripts/appLib/components/authors/authors.controller.js"></script>
+    @*Подключаем блок BOOKS*@
+    <script src="~/Scripts/appLib/components/books/books.init.js"></script>
+    <script src="~/Scripts/appLib/components/books/books.service.js"></script>
+    <script src="~/Scripts/appLib/components/books/books.directive.js"></script>
+    <script src="~/Scripts/appLib/components/books/books.controller.js"></script>
+    @*  *@
+    <script src="~/Scripts/appLib/app.js"></script>
+
+
+}
+
+
